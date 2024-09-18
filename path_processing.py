@@ -1,5 +1,6 @@
 import math
 from dataclasses import dataclass
+from typing import List
 
 import matplotlib.cm as cmx
 import matplotlib.colors as colors
@@ -24,7 +25,7 @@ def get_curvature(base: Transform, target: Transform) -> float:
     return angle / distance if distance > 0 else 0
 
 
-def get_path_points(points: list[Vector2]) -> list[PathPoint]:
+def get_path_points(points: List[Vector2]) -> List[PathPoint]:
     poses = []
     for i in range(len(points)):
         p = points[i]
@@ -64,7 +65,6 @@ if __name__ == '__main__':
         dx = math.cos(p.pose.M.angle) * 20
         dy = math.sin(p.pose.M.angle) * 20
         colorVal = scalarMap.to_rgba(abs(p.curvature))
-        print(abs(p.curvature), colorVal)
 
         plt.arrow(x, y, dx, dy, head_width=10, head_length=10, color=colorVal)
 
