@@ -1,5 +1,5 @@
-from .bot import SimpleBot
+from .bot import ReinzorBot
 
 
 def test_init():
-    SimpleBot(track=None)
+    ReinzorBot(track=None)
