@@ -3,9 +3,6 @@ import sys
 from dataclasses import dataclass
 from typing import List
 
-import matplotlib.cm as cmx
-import matplotlib.colors as colors
-import matplotlib.pyplot as plt
 import numpy as np
 from pygame import Vector2
 
@@ -45,7 +42,8 @@ class PathPoint:
     def target_velocity(self, distance: float, velocity: float) -> float:
         target_velocity = min(self.max_velocity, distance_velocity_function(distance, self.curvature_velocity))
         if DEBUG:
-            print(f"Curvature velocity: {self.curvature_velocity:.01f}, target velocity: {target_velocity:.01f}, velocity: {velocity:.01f}")
+            print(
+                f"Curvature velocity: {self.curvature_velocity:.01f}, target velocity: {target_velocity:.01f}, velocity: {velocity:.01f}")
         return target_velocity
 
 
@@ -86,6 +84,10 @@ def get_path_points(points: List[Vector2]) -> List[PathPoint]:
 
 
 if __name__ == '__main__':
+    import matplotlib.cm as cmx
+    import matplotlib.colors as colors
+    import matplotlib.pyplot as plt
+
     points = [Vector2(x, y) for x, y in track1.lines]
 
     # Perform the interpolation
