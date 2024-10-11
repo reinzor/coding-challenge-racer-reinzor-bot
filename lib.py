@@ -22,8 +22,8 @@ DEBUG = "--reinzor" in sys.argv
 def acceleration_velocity_profile(
     distance: float,
     velocity_offset: float,
-    acceleration=80.0,
-    distance_offset: float = 50.0,
+    acceleration: float,
+    distance_offset: float,
 ) -> float:
     d = max(0.0, distance - distance_offset)
     return math.sqrt(2 * acceleration * d) + velocity_offset
