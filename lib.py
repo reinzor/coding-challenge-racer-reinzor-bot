@@ -19,8 +19,8 @@ ACCELERATION = 80.
 DEBUG = "--reinzor" in sys.argv
 
 
-def acceleration_velocity_profile(distance: float, velocity_offset: float, acceleration=ACCELERATION,
-                                  distance_offset: float = DISTANCE_OFFSET) -> float:
+def acceleration_velocity_profile(distance: float, velocity_offset: float, acceleration=80.,
+                                  distance_offset: float = 50.) -> float:
     d = max(0., distance - distance_offset)
     return math.sqrt(2 * acceleration * d) + velocity_offset
 
@@ -28,15 +28,15 @@ def acceleration_velocity_profile(distance: float, velocity_offset: float, accel
 def distance_velocity_function(distance: float, velocity_offset: float) -> float:
     if distance < 0.:
         raise ValueError(f"Distance {distance} cannot be negative")
-    return acceleration_velocity_profile(distance, velocity_offset)
+    return acceleration_velocity_profile(distance, velocity_offset, ACCELERATION, DISTANCE_OFFSET)
 
 
 @dataclass
 class PathPoint:
     pose: Transform
     curvature: float
-    max_velocity: float = MAX_VELOCITY
-    curvature_velocity_scaling = CURVATURE_VELOCITY_SCALING
+    max_velocity: float
+    curvature_velocity_scaling: float
 
     @property
     def curvature_velocity(self):
@@ -82,7 +82,7 @@ def get_path_points(points: List[Vector2]) -> List[PathPoint]:
             if abs(curvature) > abs(max_curvature):
                 max_curvature = curvature
         for k in range(i, j):
-            path_points.append(PathPoint(poses[k % len(poses)], max_curvature))
+            path_points.append(PathPoint(poses[k % len(poses)], max_curvature, MAX_VELOCITY, CURVATURE_VELOCITY_SCALING))
         i = j
 
     return path_points
