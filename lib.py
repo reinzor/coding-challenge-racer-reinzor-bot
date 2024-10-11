@@ -10,12 +10,17 @@ from racer.linear_math import Transform, Rotation
 from racer.tracks import track1
 
 CURVATURE_CLUSTERING_DISTANCE = 400.
+CURVATURE_VELOCITY_SCALING = 1.9
+MAX_VELOCITY = 300.
+
+DISTANCE_OFFSET = 50.
+ACCELERATION = 80.
 
 DEBUG = "--reinzor" in sys.argv
 
 
-def acceleration_velocity_profile(distance: float, velocity_offset: float, acceleration=80.,
-                                  distance_offset: float = 50.) -> float:
+def acceleration_velocity_profile(distance: float, velocity_offset: float, acceleration=ACCELERATION,
+                                  distance_offset: float = DISTANCE_OFFSET) -> float:
     d = max(0., distance - distance_offset)
     return math.sqrt(2 * acceleration * d) + velocity_offset
 
@@ -30,8 +35,8 @@ def distance_velocity_function(distance: float, velocity_offset: float) -> float
 class PathPoint:
     pose: Transform
     curvature: float
-    max_velocity: float = 300.
-    curvature_velocity_scaling = 1.9
+    max_velocity: float = MAX_VELOCITY
+    curvature_velocity_scaling = CURVATURE_VELOCITY_SCALING
 
     @property
     def curvature_velocity(self):
