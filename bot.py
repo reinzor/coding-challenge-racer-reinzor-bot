@@ -21,11 +21,15 @@ class ReinzorBot(Bot):
     def contributor(self):
         return "Rein"
 
-    def compute_commands(self, next_waypoint: int, position: Transform, velocity: Vector2) -> Tuple:
+    def compute_commands(
+        self, next_waypoint: int, position: Transform, velocity: Vector2
+    ) -> Tuple:
         path_point = self.points[next_waypoint]
         relative_position = position.inverse() * path_point.pose.p
 
-        if velocity.length() < path_point.target_velocity(relative_position.length(), velocity.length()):
+        if velocity.length() < path_point.target_velocity(
+            relative_position.length(), velocity.length()
+        ):
             throttle = 1
         else:
             throttle = -1
